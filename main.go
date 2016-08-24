@@ -90,3 +90,33 @@ func checkKey(key string) error {
 
 	return nil
 }
+
+func (b *GoogleAPI) MakeLong(shorturl string) (Response, error) {
+	url := MasterURL + "?key=" + b.Key + "&shortUrl=" + shorturl
+	req, err := http.NewRequest("GET", url, nil)
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return Response{}, err
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return Response{}, err
+	}
+
+	var res Response
+	err = json.Unmarshal(body, &res)
+	if err != nil {
+		return Response{}, err
+	}
+
+	if res.Status != "OK" {
+		return Response{}, fmt.Errorf(string(body))
+	}
+
+	return res, nil
+}
