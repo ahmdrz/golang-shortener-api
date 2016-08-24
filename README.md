@@ -3,13 +3,13 @@ A library for using google url shortener api written in golang
 
 #### Installation :
 
-```
+```bash
   go get github.com/ahmdrz/golang-shortener-api
 ```
 
 #### Simple code :
 
-```
+```go
 package main
 
 import (
@@ -35,7 +35,7 @@ func main() {
 
 #### Output :
 
-```
+```bash
 http://goo.gl/r5Pl
 http://yahoo.com/
 ```
